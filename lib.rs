@@ -5,41 +5,32 @@ use serde_bytes::{ByteBuf};
 use std::collections::BTreeMap;
 
 mod rush;
-mod rando;//
+mod rando;
 mod nft;
 
 use crate::nft::NftData;
 use crate::rush::Rush;
-
-//use rand::Rng;//
-//use rand::{random};
-
 
 //
 #[init]
 fn init() {
     ic_cdk::println!("Init {:?}", ic_cdk::api::time());
     let rush_nft = storage::get_mut::<NftData>();
-    rush_nft.total_supply = 10000;//
+    rush_nft.total_supply = 10000;
     rush_nft.mint_flag = false;
-    rush_nft.adventure_gap = 8*3600*1000000000;//
-    //needs to be a way to pass this into init
-    //VM: mwsrs-kv7ij-eral5-ya5kn-e3krw-q36oj-mdpp2-phxgq-f3b3i-xh5q2-7qe
-    //WSL:7jk22-6zyr6-ufepb-bcitn-zqdhf-4lkel-ls3qn-4yydx-ozkvy-f3mas-pqe
+    rush_nft.adventure_gap = 8*3600*1000000000;
+    //Test: mwsrs-kv7ij-eral5-ya5kn-e3krw-q36oj-mdpp2-phxgq-f3b3i-xh5q2-7qe
+    //Main:7jk22-6zyr6-ufepb-bcitn-zqdhf-4lkel-ls3qn-4yydx-ozkvy-f3mas-pqe
     let owner_id = Principal::from_text(
-        //"mwsrs-kv7ij-eral5-ya5kn-e3krw-q36oj-mdpp2-phxgq-f3b3i-xh5q2-7qe"
         "7jk22-6zyr6-ufepb-bcitn-zqdhf-4lkel-ls3qn-4yydx-ozkvy-f3mas-pqe"
     ).unwrap();
     rush_nft.add_controller(&owner_id);
-
     init_rush();
 }
 
 fn init_rush() -> () {
 
-    //
     let rush = storage::get_mut::<Rush>();
-    //
     rush.weapons = vec![
         "Iron Sword",
         "Bronze Sword",
@@ -326,7 +317,7 @@ fn init_rush() -> () {
         "Barbarian",
         "Bard",
         "Juggler",
-        "Fighter",//---
+        "Fighter",//-
         "Demon Hunter👻",
         "Warrior",
         "Paladin",
@@ -344,7 +335,7 @@ fn init_rush() -> () {
         "Barbarian",
         "Bard",
         "Juggler",
-        "Fighter",//---
+        "Fighter",//-
         "Warrior",
         "Paladin",
         "Hunter",
@@ -354,7 +345,7 @@ fn init_rush() -> () {
         "Wizard",
         "Warlock",
         "Monk",
-        "Druid",////
+        "Druid",//
         "Warrior",
         "Paladin",
         "Hunter",
@@ -418,7 +409,7 @@ fn init_rush() -> () {
         "Retro",
     ].iter().map(|s| s.to_string()).collect();
     
-////////////////////////////////////
+
     rush.name_prefixes = vec![
         "Gold",
     ].iter().map(|s| s.to_string()).collect();
@@ -465,7 +456,6 @@ fn claim() -> Result<u64, String> {
 }
 
 
-//+++++++++++++++++++++++++++++++++++++++++++++++++++++++
 #[update]
 fn adventure(token_id: u64) -> Result<String, String>  {
     return storage::get_mut::<NftData>().adventure(token_id);
@@ -490,7 +480,6 @@ fn mint_off() -> bool  {
 fn get_mint_flag() -> bool  {
     return storage::get_mut::<NftData>().get_mint_flag();
 }
-//////////////////////////////////
 
 #[query]
 pub fn queryxp(token_id: u64) -> u64 {
@@ -513,14 +502,7 @@ pub fn querylevel(token_id: u64) -> u64 {
     return storage::get_mut::<NftData>().querylevel(token_id);
 }
 
-/*
-#[query]
-pub async fn querycaller() -> Option<Principal> {
-    return storage::get_mut::<NftData>().querycaller(ic_cdk::caller());
-}
-*/
 
-//+++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 //Allow the original airdrop to always exists for future references
 //where sites can use this to know if the person transferred their NFT or not.
@@ -613,7 +595,6 @@ struct HttpResponse {
     body: Vec<u8>,
 }
 
-//
 #[query]
 async fn http_request(req: HttpRequest) -> HttpResponse {
 
@@ -661,9 +642,6 @@ fn get_token_properties(token_id: u64) -> Vec<(String, String)> {
 
     let rush = storage::get_mut::<Rush>();
     return rush.get_properties(token_id);
-    //let mut prop = rush.get_properties(token_id);
-    //prop.push(("aaa".to_string(),rush_nft.xp.get(&token_id).unwrap().to_string()));
-    //return prop;
 
 }
 
