@@ -10,11 +10,7 @@ pub struct Rand {
     w: u64,
 }
 
-/*
-pub fn compute(&self, items: &Vec<String>, offset: u64, token_id: u64) -> String {
-let rand = Rand::new(token_id + offset).rand();
-let item_index = rand as usize % items.len();
-*/
+
 impl Rand {
     pub fn new(seed: u64) -> Rand {
         Rand {
