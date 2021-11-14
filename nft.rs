@@ -12,18 +12,14 @@ pub struct NftData {
     pub tokens: BTreeMap<u64, Principal>,
     pub controllers: Vec<Principal>,
     pub claim_index: u64,
-    //+++++++++++++++++++++++++
     pub mintlimit: BTreeMap<Principal, u64>,
     pub xp: BTreeMap<u64, u64>,
     pub level: BTreeMap<u64, u64>,
-
     pub attribute_points: BTreeMap<u64, u64>,
     pub attr_strength: BTreeMap<u64, u64>,
     pub attr_agility: BTreeMap<u64, u64>,
     pub attr_intelligence: BTreeMap<u64, u64>,
-
     pub adventurers_log: BTreeMap<u64, u64>,
-    //+++++++++++++++++++++++++++
     pub token_seeds: BTreeMap<u64, u64>
 }
 
@@ -218,7 +214,6 @@ impl NftData {
     }
 
 
-    //////////////////////////////
     pub fn mint_on(&mut self) -> bool {
         self.mint_flag = true;
         return self.mint_flag;
@@ -232,7 +227,6 @@ impl NftData {
     pub fn get_mint_flag(&mut self) -> bool {
         return self.mint_flag;
     }
-    //////////////////////////////
 
     pub fn querygap(&mut self, token_id: u64) -> u64 {
         return *self.adventurers_log.get(&token_id).unwrap();
@@ -254,8 +248,5 @@ impl NftData {
         ic_cdk::println!("Caller is ->  {:?}", user_id.to_string());
         return Some(user_id.clone());
     }
-
-    //++++++++++++++++++++++++++++++++++++++++
-
 
 }
